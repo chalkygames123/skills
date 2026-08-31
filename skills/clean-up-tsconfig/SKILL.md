@@ -15,11 +15,11 @@ Treat `tsconfig.json` as JSONC unless the repository establishes otherwise. Pres
 
 Before editing, determine the context for every targeted config.
 
-* Read repository guidance and inspect package manifests, lockfiles, task scripts, CI workflows, and editor/tool configuration to find the locally installed TypeScript version and every relevant `tsc` invocation.
-* Resolve each config's full `extends` chain. Base configurations load first; derived configurations override them, and relative paths are resolved from the configuration file that declares them. Treat inherited values and command-line flags as part of the effective configuration. [TypeScript TSConfig reference](https://www.typescriptlang.org/tsconfig/)
-* Use the repository's own TypeScript executable. Record its version and consult its `tsc --help --all` output for the option defaults and implications that apply to that exact compiler version.
-* Run `tsc -p <config> --showConfig` before editing to inspect the final configuration TypeScript reports. `--showConfig` prints the final configuration instead of building. [TypeScript compiler options](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
-* Identify whether the config is consumed only by `tsc` or also by a bundler, test runner, linter, framework, runtime, or editor. An option may matter to one of those consumers even when `tsc` itself can infer the same value.
+- Read repository guidance and inspect package manifests, lockfiles, task scripts, CI workflows, and editor/tool configuration to find the locally installed TypeScript version and every relevant `tsc` invocation.
+- Resolve each config's full `extends` chain. Base configurations load first; derived configurations override them, and relative paths are resolved from the configuration file that declares them. Treat inherited values and command-line flags as part of the effective configuration. [TypeScript TSConfig reference](https://www.typescriptlang.org/tsconfig/)
+- Use the repository's own TypeScript executable. Record its version and consult its `tsc --help --all` output for the option defaults and implications that apply to that exact compiler version.
+- Run `tsc -p <config> --showConfig` before editing to inspect the final configuration TypeScript reports. `--showConfig` prints the final configuration instead of building. [TypeScript compiler options](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
+- Identify whether the config is consumed only by `tsc` or also by a bundler, test runner, linter, framework, runtime, or editor. An option may matter to one of those consumers even when `tsc` itself can infer the same value.
 
 Do not substitute a globally installed compiler, a web playground, a third-party option table, or assumptions from a different TypeScript release for the repository's compiler.
 
@@ -27,11 +27,11 @@ Do not substitute a globally installed compiler, a web playground, a third-party
 
 Audit every property in `compilerOptions`, not only the familiar options. A property is removable only when all of the following are true:
 
-* Removing it leaves the effective behavior unchanged for the repository's installed TypeScript version and all relevant inherited configurations and CLI invocations.
-* Its value is supplied by the compiler's current default or by another retained setting, rather than by an inherited configuration that the property currently overrides.
-* It is not an intentional compatibility pin for a supported TypeScript-version range, runtime, package format, bundler, or external tool.
-* It does not express an explicit opt-out such as a strict-family option set to `false` while `strict` is enabled.
-* The candidate configuration passes the validation required below.
+- Removing it leaves the effective behavior unchanged for the repository's installed TypeScript version and all relevant inherited configurations and CLI invocations.
+- Its value is supplied by the compiler's current default or by another retained setting, rather than by an inherited configuration that the property currently overrides.
+- It is not an intentional compatibility pin for a supported TypeScript-version range, runtime, package format, bundler, or external tool.
+- It does not express an explicit opt-out such as a strict-family option set to `false` while `strict` is enabled.
+- The candidate configuration passes the validation required below.
 
 A value merely matching today's default is insufficient. Preserve it when the repository supports compiler versions with different defaults or when the explicit value communicates a supported-runtime boundary. If intent is unclear, preserve the option and report it as a possible follow-up rather than guessing.
 
@@ -41,12 +41,12 @@ Use the installed compiler's help text and the matching official documentation a
 
 Pay particular attention to these dependency groups:
 
-* `strict` and its strict-mode family. `strict: true` enables the strict-mode family, while individual members can still be explicitly disabled; therefore, only a same-valued child setting can be redundant. [TypeScript `strict`](https://www.typescriptlang.org/tsconfig/strict.html)
-* `target`, `module`, `moduleResolution`, `lib`, and `useDefineForClassFields`. These settings affect emitted syntax, built-in ambient declarations, and module lookup; determine their resolved values together rather than deleting one based on a standalone rule.
-* Node and bundler module modes. Module mode can determine module resolution, package `imports` and `exports` lookup, interop behavior, and—in specific modes—the target. File extensions and the nearest `package.json` can also affect Node-mode behavior. [TypeScript module reference](https://www.typescriptlang.org/docs/handbook/modules/reference.html) [Choosing module compiler options](https://www.typescriptlang.org/docs/handbook/modules/guides/choosing-compiler-options.html)
-* `resolvePackageJsonExports`, `resolvePackageJsonImports`, `esModuleInterop`, and `allowSyntheticDefaultImports`. Their defaults depend on the selected module or resolution mode. [TypeScript compiler options](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
-* `rewriteRelativeImportExtensions` and `allowImportingTsExtensions`; `verbatimModuleSyntax` and `isolatedModules`; and `isolatedModules` and `preserveConstEnums`. Confirm the active compiler's implications before removing either option. [TypeScript `rewriteRelativeImportExtensions`](https://www.typescriptlang.org/tsconfig/rewriteRelativeImportExtensions.html) [TypeScript `verbatimModuleSyntax`](https://www.typescriptlang.org/tsconfig/verbatimModuleSyntax.html) [TypeScript compiler options](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
-* `composite`, declaration emission, incremental builds, root-directory inference, project references, and file inclusion. `composite` imposes additional constraints and changes defaults, so validate build-mode behavior as well as type checking. [TypeScript `composite`](https://www.typescriptlang.org/tsconfig/composite.html)
+- `strict` and its strict-mode family. `strict: true` enables the strict-mode family, while individual members can still be explicitly disabled; therefore, only a same-valued child setting can be redundant. [TypeScript `strict`](https://www.typescriptlang.org/tsconfig/strict.html)
+- `target`, `module`, `moduleResolution`, `lib`, and `useDefineForClassFields`. These settings affect emitted syntax, built-in ambient declarations, and module lookup; determine their resolved values together rather than deleting one based on a standalone rule.
+- Node and bundler module modes. Module mode can determine module resolution, package `imports` and `exports` lookup, interop behavior, and—in specific modes—the target. File extensions and the nearest `package.json` can also affect Node-mode behavior. [TypeScript module reference](https://www.typescriptlang.org/docs/handbook/modules/reference.html) [Choosing module compiler options](https://www.typescriptlang.org/docs/handbook/modules/guides/choosing-compiler-options.html)
+- `resolvePackageJsonExports`, `resolvePackageJsonImports`, `esModuleInterop`, and `allowSyntheticDefaultImports`. Their defaults depend on the selected module or resolution mode. [TypeScript compiler options](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
+- `rewriteRelativeImportExtensions` and `allowImportingTsExtensions`; `verbatimModuleSyntax` and `isolatedModules`; and `isolatedModules` and `preserveConstEnums`. Confirm the active compiler's implications before removing either option. [TypeScript `rewriteRelativeImportExtensions`](https://www.typescriptlang.org/tsconfig/rewriteRelativeImportExtensions.html) [TypeScript `verbatimModuleSyntax`](https://www.typescriptlang.org/tsconfig/verbatimModuleSyntax.html) [TypeScript compiler options](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
+- `composite`, declaration emission, incremental builds, root-directory inference, project references, and file inclusion. `composite` imposes additional constraints and changes defaults, so validate build-mode behavior as well as type checking. [TypeScript `composite`](https://www.typescriptlang.org/tsconfig/composite.html)
 
 Do not reconstruct default `lib` arrays manually. They vary by target and TypeScript release, and an explicit `lib` often intentionally excludes browser or worker globals. Likewise, do not remove `types`, `typeRoots`, `lib`, or module-resolution settings solely because the current source files do not expose a difference.
 
@@ -72,7 +72,7 @@ Finish only when every targeted `compilerOptions` property has been assessed aga
 
 Report:
 
-* Each removed option and the retained default or implication that supplies its value.
-* Each deliberately retained option that looked removable but is an override, version pin, external-tool requirement, or semantic safeguard.
-* The TypeScript version, configs checked, and validation commands and results.
-* Any deprecations or potential migrations discovered but intentionally left unchanged.
+- Each removed option and the retained default or implication that supplies its value.
+- Each deliberately retained option that looked removable but is an override, version pin, external-tool requirement, or semantic safeguard.
+- The TypeScript version, configs checked, and validation commands and results.
+- Any deprecations or potential migrations discovered but intentionally left unchanged.
