@@ -1,0 +1,23 @@
+{
+	"name": "root",
+	"type": "module",
+	"scripts": {
+		"fmt": "oxfmt",
+		"fmt:check": "oxfmt --check"
+	},
+	"devDependencies": {
+		"oxfmt": "catalog:"
+	},
+	"devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"version": "12.9.1",
+			"onFail": "download"
+		},
+		"runtime": {
+			"name": "node",
+			"version": "26.10.0",
+			"onFail": "download"
+		}
+	}
+}

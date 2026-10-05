@@ -1,0 +1,16 @@
+catalog:
+  oxfmt: 0.71.0
+
+catalogMode: strict
+
+cleanupUnusedCatalogs: true
+
+minimumReleaseAge: 4320
+
+minimumReleaseAgeStrict: false
+
+saveExact: true
+
+trustPolicy: no-downgrade
+
+trustPolicyIgnoreAfter: 4320
